@@ -9,7 +9,9 @@ TARGET = FissionApp
 
 #All of the source code that needs linking and compiling.
 SRC = Source/Application.cpp\
-      Source/Graphics/Window.cpp
+      Source/Graphics/Window.cpp\
+      Source/Utilities/ErrorSystem.cpp\
+      Source/Utilities/FileSystem.cpp
 
 #The path to the includes directory from the source of compilation.
 INCLUDES = -I./Includes

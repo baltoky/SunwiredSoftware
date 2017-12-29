@@ -1,36 +1,31 @@
 #define GLEW_STATIC
 
+#include "./Utilities/LogSystem.h"
+#include "./Utilities/ErrorSystem.h"
+#include "./Graphics/Window.h"
+#include "./Utilities/FileSystem.h"
 #include <iostream>
 #include <GLFW/glfw3.h>
-
-#define LOG(x) std::cout << x \
-	<< " l: " << __LINE__ <<\
-	" f: " << __FILE__ << std::endl;
+#include <string>
 
 int main(int argc, char** argv)
 {
-	GLFWwindow* win;
+	char* filepath;
+	if(argc > 1)
+		filepath = argv[1];
+	else filepath = (char*)"./text.txt";
 
-	if(!glfwInit()){
-		LOG("Cannot initialize GLFW");
-		return -1;
+	Fission::f_Window* window = new Fission::f_Window();
+
+	while(!(*window).close())
+	{
+		(*window).update();
+		(*window).clear();
+		if((*window).isKeyPressed(GLFW_KEY_ESCAPE)){
+			LOG("Key was pressed");
+			glfwSetWindowShouldClose((*window).getWindowPointer(), true);
+		}
 	}
 
-	win = glfwCreateWindow(800, 500, "Fission Engine", NULL, NULL);
-	if(!win){
-		LOG("Could not create a window.");
-		glfwTerminate();
-		return -1;
-	}
-
-	glfwMakeContextCurrent(win);
-
-	while(!glfwWindowShouldClose(win)){
-		glClear(GL_COLOR_BUFFER_BIT);
-		glfwSwapBuffers(win);
-		glfwPollEvents();
-	}
-
-	glfwTerminate();
 	return 0;
 }
